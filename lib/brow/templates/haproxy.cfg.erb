@@ -29,6 +29,8 @@ frontend http-in
     acl <%= name %>-host hdr(host) <%= name %>.dev
     use_backend <%= name %> if <%= name %>-host
     <% end %>
+    acl local-host hdr(host) local.dev
+    use_backend local if local-host
     <% if default_name %>
     default_backend <%= default_name %>
     <% end %>
@@ -38,3 +40,7 @@ backend <%= name %>
     reqirep ^Host:\ (\S+).*$ Host:\ <%= name %>\r\nX-Forwarded-Host:\ \1
     server name 127.0.0.1:<%= server_port %> maxconn 32
 <% end %>
+
+backend local
+    reqirep ^Host:\ (\S+).*$ Host:\ <%= name %>\r\nX-Forwarded-Host:\ \1
+    server name 127.0.0.1:3000 maxconn 32
