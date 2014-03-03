@@ -16,7 +16,7 @@ module Brow
       store.all.each do |host|
         # Delete old names we have previously added
         if host and host.name
-          if host.name.end_with(".#{DOMAIN_SUFFIX}")
+          if host.name.end_with?(".#{DOMAIN_SUFFIX}")
             store.delete(host)
           end
         end
