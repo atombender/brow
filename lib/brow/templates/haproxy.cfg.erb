@@ -30,6 +30,7 @@ frontend http-in
     use_backend <%= name %> if <%= name %>-host
     <% end %>
     acl local-host hdr_reg(host) -i ^.*\.dev$
+    acl local-host hdr_reg(host) -i ^dev\.enclosure\.io$
     use_backend local if local-host
     <% if default_name %>
     default_backend <%= default_name %>
